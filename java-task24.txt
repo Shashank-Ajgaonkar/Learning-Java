@@ -1,0 +1,40 @@
+//Writing and reading file by the name CharacterFile (File Handling)
+
+package myData;
+import java.io.*;
+import java.util.*;
+
+public class CharacterFileHandling {
+
+	public static void main(String[] args) throws Exception {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Name of employee: ");
+		String name = sc.next();
+		System.out.println("Enter ID of employee: ");
+		int id = sc.nextInt();
+		System.out.println("Enter Salary of employee: ");
+		double salary = sc.nextDouble();
+		
+		//For file writing in character stream
+		FileWriter fw = new FileWriter("D:/CharacterFile.txt");
+		fw.write("Employee Name: "+ name + "\n");
+		String cid = Integer.toString(id);
+		fw.write("Employee ID: "+ cid + "\n");
+		String csalary = Double.toString(salary);
+		fw.write("Employee Salary: "+ csalary);
+		fw.close();
+		System.out.println("\n"+"File has been written successfully" + "\n");
+		
+		//For file reading in character stream
+		File f1 = new File("D:/CharacterFile.txt");
+		Scanner dr = new Scanner(f1);     // pass the file class object to scanner
+		while(dr.hasNextLine())           //returns true if there is another line of text available in the scanner 
+		{
+			String str = dr.nextLine();  // used to get data from file CharacterFile
+			System.out.println(str);
+		}
+		System.out.println("\n" + "File has been read successfully");
+		sc.close();
+		dr.close();
+}
+}

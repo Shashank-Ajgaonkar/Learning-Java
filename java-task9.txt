@@ -1,0 +1,35 @@
+//WAP to take input from user and store data in a two dimensional array
+
+package myData;
+import java.util.*;
+public class TwoDimensionalArray {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String name;
+		int count = 1;
+		String[][] animals = new String[2][2];
+		System.out.println("Enter four animals of your choice:");
+		for(int i = 0;i < animals.length;i++)
+		{
+			for(int j = 0;j < animals[i].length;j++)
+			{
+				System.out.println(count++ + ") Choice:");
+				name = sc.nextLine();
+				animals[i][j] = name;
+			}
+		}
+		
+		System.out.print("\nEntered animals in 2D array is as follows :");
+		
+		for(int i = 0;i < animals.length;i++)
+		{
+			System.out.println();
+			for(int j = 0;j < animals[i].length;j++)
+			{
+				System.out.print(animals[i][j] + '\t');
+			}
+		}
+		sc.close();
+}
+}

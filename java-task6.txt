@@ -1,0 +1,35 @@
+//WAP to find greatest number out of 3 unique numbers accept values from user.
+
+package myData;
+import java.util.*;
+public class GreatestofNumber {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int num1,num2,num3;
+		System.out.println("Enter 3 unique numbers to see which one is the greatest of them.\n");
+		System.out.println("Enter first Number:");
+		num1 = s.nextInt();
+		System.out.println("Enter second Number:");
+		num2 = s.nextInt();
+		System.out.println("Enter third Number:");
+		num3 = s.nextInt();
+		if (num1 > num2 && num1 > num3)
+		{
+			System.out.println("Number " + num1 + " is the greatest of the given numbers.");
+		}
+		else if(num2 > num1 && num2 > num3)
+		{
+			System.out.println("Number " + num2 + " is the greatest of the given numbers.");
+		}
+		else if(num3 > num1 && num3 > num2)
+		{
+			System.out.println("Number " + num3 + " is the greatest of the given numbers.");
+		}
+		else
+		{
+			System.out.println("Invalid input. Please try again.");
+		}
+		s.close();
+}
+}

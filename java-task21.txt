@@ -1,0 +1,36 @@
+//Threading using extends and implement keyword
+
+package myData;
+
+class Loader extends Thread            // using extends keyword we override the run() method of Thread class by inheritance
+{
+	public void run()                  // overriding the run() method of Thread class 
+	{
+		System.out.println("Hello from extends");
+	}
+}
+
+class Load implements Runnable      // using implements keyword by implementing the Runnable interface
+{
+	public void run()
+	{
+		try {
+			Thread.sleep(2000);    // this method always rises interrupted exception hence must be within try and catch block
+			System.out.println("Hello from implements");
+		} 
+		catch(InterruptedException e) {
+			System.out.println(e);
+		}
+		
+	}
+}
+
+public class Multitaskingthread {
+
+	public static void main(String[] args) {
+		Loader obj = new Loader();      // create an object of Loader class and call it's start() method to run thread.
+		obj.start();
+		Thread t = new Thread(new Load()); //create new Thread object, pass the Runnable class Load to its constructor,
+		t.start();                         //start the Thread by calling the start() method
+}
+}

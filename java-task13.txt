@@ -1,0 +1,43 @@
+//WAP to find Maximum and Minimum number using parameterized constructor.
+
+package myData;
+
+class MaxMin {
+	int num1,num2;
+	
+	MaxMin(int n1,int n2)
+	{
+		num1 = n1;
+		num2 = n2;
+	}
+	
+	public void check()
+	{
+		if(num1 == num2)
+		{
+			System.out.println("The two numbers are equal.");
+		}
+		else if (num1 > num2)
+		{
+			System.out.println("The maximum number is " + num1 + " and minimum number is " + num2);
+		}
+		else
+		{
+			System.out.println("The maximum number is " + num2 + " and minimum number is " + num1);
+		}
+			
+	}
+}
+
+public class MaxMinParaConstructor {
+
+	public static void main(String[] args) {
+		MaxMin mm1 = new MaxMin(5,8);
+		MaxMin mm2 = new MaxMin(5,5);
+		MaxMin mm3 = new MaxMin(7,5);
+	    mm1.check();
+	    mm2.check();
+	    mm3.check();
+		
+}
+}

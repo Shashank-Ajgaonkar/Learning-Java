@@ -1,0 +1,30 @@
+//WAP to  find volume of cylinder1 and cylinder2 using single inheritance
+
+package myData;
+
+class Cylinder1 {
+	int radius = 4,height = 5;
+	final double pi = 3.14;
+	void volume1 ()
+	{
+		double vol1 = pi * Math.pow(radius,2) * height;
+		System.out.println("Volume of cylinder with radius " + radius + " and height " + height + " is " + vol1);
+	}
+}
+class Cylinder2 extends Cylinder1 {
+	int radius = 6,height = 8;
+	void volume2 ()
+	{
+		double vol2 = pi * Math.pow(radius,2) * height;
+		System.out.println("Volume of cylinder with radius " + radius + " and height " + height + " is " + vol2);
+	}
+}
+
+public class CylinderVolInheritance {
+
+	public static void main(String[] args) {
+		Cylinder2 c = new Cylinder2();
+		c.volume1();
+		c.volume2();
+}
+}
