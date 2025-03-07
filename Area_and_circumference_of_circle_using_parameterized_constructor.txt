@@ -1,0 +1,31 @@
+//WAP to find Area and circumference of circle using parameterized constructor
+
+package myData;
+
+class Circle {
+	int radius;
+	final double pi = 3.14;
+	Circle(int num)
+	{
+		radius = num;
+	}
+	public void circumference()
+	{
+		double c = 2 * pi * radius;
+		System.out.println("The circumfernce of circle with radius " + radius + " is " + c);
+	}
+	public void area()
+	{
+		double a = pi * Math.pow(radius,2);
+		System.out.println("The area of circle with radius " + radius + " is " + a);
+	}
+}
+
+public class CircleCircumParaConstructor {
+
+	public static void main(String[] args) {
+		Circle obj = new Circle(4);
+		obj.area();
+		obj.circumference();
+}
+}

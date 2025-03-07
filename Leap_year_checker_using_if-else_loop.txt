@@ -1,0 +1,23 @@
+//WAP to find leap year take input from user.
+
+package myData;
+import java.util.*;
+public class LeapYear {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int year;
+		System.out.println("Enter a year to check if it is a leap year or not.\n");
+		System.out.println("Enter year here:");
+		year = s.nextInt();
+		if ((year%4 == 0 && year%100 != 0) || (year%400 == 0))
+		{
+			System.out.println("\n"+ year + " is a leap year.");
+		}
+		else
+		{
+			System.out.println("\n"+ year + " is not a leap year.");
+		}
+		s.close();
+}
+}

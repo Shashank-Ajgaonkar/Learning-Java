@@ -1,0 +1,28 @@
+//WAP to find area of rectangle by creating a class for it.
+
+package myData;
+
+ class Rectangle
+ {
+	 int length,breadth;                          //fields
+	 
+	 Rectangle (int len,int bre)                 //constructor
+	 {   
+		 this.length = len;                      //initialize variables
+		 this.breadth = bre;                     //initialize variables
+	 }
+	 
+	 public int Area()                           // calculate area
+	 {
+		 int area = this.length * this.breadth;
+		 return area;
+	 }
+ }
+ 
+public class AreaRectangle {
+	
+	public static void main(String[] args) {
+		Rectangle obj = new Rectangle(5,8);      //creating object of class Rectangle by passing two parameters
+		System.out.println("Area of rectangle = " + obj.Area());
+}
+}

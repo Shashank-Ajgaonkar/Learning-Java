@@ -1,0 +1,290 @@
+// Write a program to implement CRUD using JSP technology
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+index.jsp
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Personal Details Form</title>
+</head>
+<body>
+	<h1 style="text-decoration:underline wavy;">Personal Details Form</h1>
+	<h2 style="text-decoration:underline dashed;">Please fill in the form below for out reference:</h2>
+	<form action="create.jsp" method="post" style="display:inline-block;">
+		<fieldset>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name"><br><br>
+			<label for="age">Age:</label>
+			<input type="text" id="age" name="age" maxlength="3" size="3"><br><br>
+			<input type="submit" value="Submit Details">
+		</fieldset>
+	</form><br><br>
+	
+	<a href="read.jsp">View Data</a>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create.jsp
+
+<%@page import="jakarta.servlet.jsp.tagext.TryCatchFinally"%>
+<%@page errorPage = "error.jsp" %>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Creating database</title>
+</head>
+<body>
+	<%
+	try 
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/formfill","root","");
+		
+		String name = request.getParameter("name");
+		String age = request.getParameter("age");
+		
+		String query = "insert into personaldetails(Name,Age) values(?,?)";
+		
+		PreparedStatement ps = con.prepareStatement(query);
+		ps.setString(1,name);
+		ps.setString(2, age);
+		int row = ps.executeUpdate();
+		
+		if(row>0) 
+		{	
+			response.sendRedirect("read.jsp");
+		}
+		else 
+		{
+			out.println("Error");
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();	
+	}
+		
+	%>
+	
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+read.jsp
+
+<%@page errorPage = "error.jsp" %>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.ResultSet"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Reading database</title>
+</head>
+<body>
+	<%
+	
+	try 
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/formfill","root","");
+		
+		String query="select * from personaldetails";
+		PreparedStatement ps=con.prepareStatement(query);
+		ResultSet rs=ps.executeQuery();
+		out.println(" || "+"Name"+" || "+"Age"+ " || " +"<br>");
+		while(rs.next())
+		{
+			out.println(" || "+rs.getString("Name")+" || "+rs.getString("Age")+ " || " +"<br>");
+		}
+		out.println("<br>");
+	}
+	catch(Exception e) 
+	{
+		e.printStackTrace();	
+	}
+	
+	%>
+	
+	
+	&#8592;<a href="index.jsp">Fill Details</a>  &nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="update.jsp">Update Details</a> &nbsp;&nbsp;&nbsp;&nbsp;
+	<a href="delete.jsp">Delete Details</a> &#8594;
+
+</body>
+</html>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+update.jsp
+
+<%@page errorPage = "error.jsp" %>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Updating database</title>
+</head>
+<body>
+
+	<h2>Data Updation Page:</h2>
+	
+	<form method="post" style="display:inline-block;">
+		<fieldset>
+			<label>Enter ID to update the record from the database:</label>
+			<input type="text" name="id"><br><br>
+			<label for="name">Name:</label>
+			<input type="text" id="name" name="name"><br><br>
+			<label for="age">Age:</label>
+			<input type="text" id="age" name="age" maxlength="3" size="3"><br><br>
+			<input type="submit" name ="update" value="Update">
+		</fieldset>
+	</form>
+	
+	<%
+	try 
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/formfill","root","");
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		String uname = request.getParameter("name");
+		String uage = request.getParameter("age");
+		String status = request.getParameter("update");
+		
+		if(status!=null)
+		{
+			if(status.equals("Update"))
+			{
+				String query="update personaldetails set Name=?,Age=? where ID=?";
+				
+				PreparedStatement ps = con.prepareStatement(query);
+				ps.setString(1,uname);
+				ps.setString(2,uage);
+				ps.setInt(3,id);
+				
+				int row=ps.executeUpdate();
+				
+				if(row>0)
+				{
+					response.sendRedirect("read.jsp");	
+				}
+				else
+				{
+					out.println("Error");
+				}
+			}
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();	
+	}
+	
+	%>
+	
+</body>
+</html>
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+delete.jsp
+
+<%@page errorPage = "error.jsp" %>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Deleting data from database</title>
+</head>
+<body>
+	
+	<h2>Data Deletion Page:</h2>
+	
+	<form method="post" style="display:inline-block;">
+		<fieldset>
+			<label>Enter ID to delete the record from the database:</label>
+			<input type="text" name="id">
+			<input type="submit" value="Delete Record">
+		</fieldset>
+	</form>
+	
+	<%
+	
+	try 
+	{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/formfill","root","");
+		
+		int id=Integer.parseInt(request.getParameter("id"));
+
+		String query="delete from personaldetails where ID=?";
+
+		PreparedStatement ps=con.prepareStatement(query);
+		ps.setInt(1, id);
+
+		int row=ps.executeUpdate();
+
+		if(row>0)
+		{
+			response.sendRedirect("read.jsp");
+		}
+		else
+		{
+			out.println("Wrong");
+		}
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();	
+	}
+	
+	%>
+
+</body>
+</html>
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+error.jsp (optional page)
+
+<%@page isErrorPage = "true" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	 
+    <h1>Exception caught</h1>							 <!-- JSP code for error page, which displays the exception -->
+    The exception is : <%= exception %>                                          <!--  displaying the exception-->
+</body>
+</html>
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
